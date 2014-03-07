@@ -1,9 +1,14 @@
+{{ config_load file="settings.tpl" section="Stream" }}
+
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" id="modernizrcom" class="no-js"> <!--<![endif]-->
+
+{{ $lang = $gimme->issue->language->code }}
+
+<!--[if lt IE 7 ]> <html lang="{{ $lang }}" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="{{ $lang }}" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="{{ $lang }}" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="{{ $lang }}" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="{{ $lang }}" id="modernizrcom" class="no-js"> <!--<![endif]-->
 <head>
 
   <meta charset="utf-8" />
@@ -15,7 +20,7 @@
   {{* if an article is active, meta-description of web page will be article's intro, otherwise it will pull site's description from System Preferences (/Configure/System Preferences) *}}
   <meta name="description" content="{{ if $gimme->article->defined }}{{ $gimme->article->deck|strip_tags:false|strip|escape:'html':'utf-8' }}{{ else }}{{ $siteinfo.description }}{{ /if }}" />
   {{* if an article is active, meta-keywords will be generated of article keywords (defined on article edit screen), otherwise it will use site-wide keywords from System Preferences (/Configure/System Preferences) *}}
-  <meta name="keywords" content="{{ if $gimme->article->defined }}{{ $gimme->article->keywords }}{{ else }}{{$siteinfo.keywords}}{{ /if }}" />
+  <meta name="keywords" content="{{ if $gimme->article->defined }}{{ $gimme->article->keywords }}{{ else }}{{ $siteinfo.keywords }}{{ /if }}" />
   <meta name="generator" content="Bluefish 2.0.3" />
 
   <!-- RSS & Pingback -->
@@ -23,39 +28,33 @@
 
   <!-- Airtime stream info -->
   <script>
-    // default to SF stream if one has not been set in the back-end
-    var apiSrc = "http://sourcefabric.airtime.pro";
-    var streamSrc = "http://sourcefabric.out.airtime.pro";
     // $todo: check browser capability and swap streams
-    // mp3
-    var stream_a = "sourcefabric_a";
-    // ogg
-    var stream_b = "sourcefabric_b";
-    // port shouldn't change but just in case…
-    var port = "8000";
-    {{ local }}
-    {{ set_issue number = "1" }}
-    {{ set_section number = "10" }}
-      {{ list_articles length = "1" constraints = "number is 204" }}
-      {{ if $gimme->article->name == "Airtime Info" }}
-        {{ if $gimme->article->API }}
-        apiSrc = "{{ $gimme->article->API }}";
+
+        // default to Sourcefabric Radio API if Airtime URL has not been set in the conf file
+        {{ if #AirtimeAPI# !=null }}
+          var apiSrc = "{{ #AirtimeAPI# }}";
         {{ /if }}
-        {{ if $gimme->article->stream }}
-        streamSrc = "{{ $gimme->article->stream }}";
+
+        // default to Sourcefabric Radio stream if Icecast URL has not been set in the conf file
+        {{ if #StreamingServer# !=null }}
+          var streamSrc = "{{ #StreamingServer# }}";
         {{ /if }}
-        {{ if $gimme->article->stream_a }}
-        stream_a = "{{ $gimme->article->stream_a }}";
+
+        // Primary stream on Sourcefabric Radio is Ogg Vorbis
+        {{ if #StreamA# !=null }}
+          var stream_a = "{{ #StreamA# }}";
         {{ /if }}
-        {{ if $gimme->article->stream_b }}
-        stream_b = "{{ $gimme->article->stream_b }}";
+
+        // Secondary stream on Sourcefabric Radio is MP3
+        {{ if #StreamB# !=null }}
+          var stream_b = "{{ #StreamB# }}";
         {{ /if }}
-        {{ if $gimme->article->port }}
-        port = "{{ $gimme->article->port }}";
+
+        // Port of the streaming server, usually 8000 or 80
+        {{ if #StreamPort# !=null }}
+          var port = "{{ #StreamPort# }}";
         {{ /if }}
-      {{ /if }}
-      {{ /list_articles }}
-    {{ /local }}
+
   </script>
 
   {{ if $gimme->article->defined }}{{* Open Graph protocol metatags for Facebook sharing *}}

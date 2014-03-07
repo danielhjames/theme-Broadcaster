@@ -1,7 +1,11 @@
 <section class="home_top">
 
+    {{ $currlang = $gimme->language->code }}
+    {{ $currplaylist = "Carousel-" }}
+    {{ $currplaylist = $currplaylist|cat:$currlang }}
+
     <section class="bxslider">
-    {{ list_playlist_articles name="Carousel" length="4" }}
+    {{ list_playlist_articles name="$currplaylist" length="4" }}
 
         <article>
             <a href="{{ url options='article' }}">{{ include file="_tpl/img/img_front.tpl" where="topfront" }}</a>
@@ -11,24 +15,32 @@
     {{ /list_playlist_articles }}
     </section>
 
-    <div class="chart_home">
-      <h2>Current <span>Charts</span></h2>
-      {{*<h2>CHART <span>{{ $smarty.now|camp_date_format:"%M" }}</span></h2>*}}
-      {{ local }}
-      {{ set_section number="90" }}
-      {{ list_articles length="1" order="byPublishDate desc" }}
-        <ol>
-          <li><span>{{ $gimme->article->one_artist }} - {{ $gimme->article->one_album }}</span></li>
-          <li><span>{{ $gimme->article->two_artist }} - {{ $gimme->article->two_album }}</span></li>
-          <li><span>{{ $gimme->article->three_artist }} - {{ $gimme->article->three_album }}</span></li>
-        </ol>
-        <p><a href="{{ url options='article' }}">Full chart</a></p>
-      {{ /list_articles }}
-      {{ unset_section }}
-      {{ /local }}
-    </div>
     <div class="current_widget" id="headerLiveHolder">
-      <h2>Offline</h2>
+      <h2>On Air Now</h2>
     </div>
+
+    <div class="about_home">
+      <h2>About <span>Us</span></h2>
+      {{ include file="_tpl/front-about-us.tpl" }}
+    </div>
+
+</section>
+
+<section class="grid-3">
+
+        <h2>Latest <span>News</span></h2>
+
+        {{ set_section number="60" }}
+        {{ list_articles length="3" order="bydate desc" }}
+          <article>
+            <figure>
+                <a href="{{ url option='article' }}">{{ include file="_tpl/img/img_onethird.tpl" }}</a>
+            </figure>
+            <h4><a href="{{ url options='article' }}">{{ $gimme->article->name }}</a></h4>
+            <p><span class="time">{{ $gimme->article->publish_date }}</span> /
+            <a class="comments_num" href="{{ url options='article' }}#comments">{{ $gimme->article->comment_count }} comment{{ if $gimme->article->comment_count != 1 }}s{{ /if }}</a></p>
+          </article>
+        {{ /list_articles }}
+        {{ unset_section }}
 
 </section>

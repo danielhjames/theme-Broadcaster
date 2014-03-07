@@ -1,7 +1,8 @@
+{{ config_load file="settings.tpl" section="Site" }}
+{{ config_load file="{{ $gimme->language->english_name }}.tpl" }}
+
   <div id="footer">
       
-    {{ include file="_tpl/sponsors-tweet.tpl" }}
-    
     <div id="bottom">
     
       <ul class="clearfix">
@@ -14,7 +15,7 @@
               {{ if $count == 1 }}
                 {{ local }}
                 {{ set_issue number = "1" }}
-                {{ list_articles constraints = "number is 110" }}
+                {{ list_articles constraints = "type is Program_Grid" }}
                   <li><a href="{{ url options="article" }}" title="{{ $gimme->article->name }}">{{ $gimme->article->name }}</a></li>
                 {{ /list_articles }}
                 {{ /local }}
@@ -39,38 +40,28 @@
         </li>
         <li>
           <ul class='social_links'>
-            {{ local }}
-            {{ set_issue number = "1"}}
-            {{ set_section number = "10" }}
-            {{ list_articles constraints = "number is 205" }}
-              {{ if $gimme->article->Twitter }}
+              {{ if #TwitterName# !=null }}
                 <li>
-                  <a href="https://twitter.com/{{ $gimme->article->Twitter }}" rel="external">{{ #followAtTwitter# }}</a>
+                  <a href="https://twitter.com/{{ #TwitterName# }}" rel="external">{{ #followAtTwitter# }}</a>
                 </li>
               {{ /if }}
-              {{ if $gimme->article->Facebook }}
+              {{ if #FacebookName# !=null }}
                 <li>
-                  <a href="https://www.facebook.com/{{ $gimme->article->Facebook }}" rel="external">{{ #likeOnFacebook# }}</a>
+                  <a href="https://www.facebook.com/{{ #FacebookName# }}" rel="external">{{ #likeOnFacebook# }}</a>
                 </li>
               {{ /if }}
-            {{ /list_articles }}
-            {{ unset_section }}
-            {{ unset_issue }}
-            {{ /local }}
             <li><a href="http://{{ $gimme->publication->site }}/{{ $gimme->language->code }}/static/rss">{{ #signupRSS# }}</a></li>
           </ul>
         </li>
         <li>
-          <p>The Scope at Ryerson<br />
-          55 Gould Street - Rm 201<br />
-          Toronto, ON M5B 1E9<br />
-          416.904.6889<p>
+        {{ if #StreetAddress# !=null }}
+          {{ #StreetAddress# }}
+        {{ /if }}
         </li>
         <li>
-          <p>
-            <a href="mailto:admin@thescopeatryerson.ca">admin@thescopeatryerson.ca</a><br />
-            &copy; Powered by <a href="http://www.sourcefabric.org/en/newscoop/" target="_blank">Newscoop</a> and <a href="http://www.sourcefabric.org/en/airtime/" target="_blank">Airtime</a>
-          </p>
+        {{ if #poweredBy# !=null }}
+          <p>{{ #poweredBy# }}</p>
+        {{ /if }}
         </li>
       </ul>
     

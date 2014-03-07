@@ -1,4 +1,4 @@
-{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+{{ config_load file="{{ $gimme->language->english_name }}.tpl" }}
 
 {{ include file="_tpl/_html-head.tpl" }}
 
@@ -9,8 +9,6 @@
     <div id="content">
 
 {{ include file="_tpl/front-playlist-articles.tpl" }}
-
-{{ include file="_tpl/front-three-blocks.tpl" }}
 
       </div><!-- / Content -->
 

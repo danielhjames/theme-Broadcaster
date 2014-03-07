@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<theme name="Broadcaster" designer="Pete Haughie" version="1.0" require="4.0">
+<theme name="Broadcaster" designer="Aleksander Baćko Jeličič and Pete Haughie" version="1.1" require="4.0">
     <description>This theme for Newscoop 4 integrates support for the Airtime broadcast automation system. It is based on Rockstar by Stephanie Miebach and Christian Kobben.</description>
     
-    <presentation-img src="themethumbs/front.jpg" name="Front page" />
-    <presentation-img src="themethumbs/section.jpg" name="Section page" />
-    <presentation-img src="themethumbs/article.jpg" name="Article" />
+    <presentation-img src="themethumbs/broadcaster-front.png" name="Front page" />
+    <presentation-img src="themethumbs/broadcaster-section.png" name="Section page" />
+    <presentation-img src="themethumbs/broadcaster-article.png" name="Article page" />
     
     <!-- =============================== -->
     
@@ -18,11 +18,10 @@
   <renditions>
     <rendition name="front" width="610" height="372" specs="crop" />
     <rendition name="big" width="600" height="400" specs="crop" />
-  <rendition name="onethird" width="290" height="190" specs="crop" />
-  <rendition name="onehalf" width="450" height="295" specs="crop" />
-  <rendition name="square" width="130" height="130" specs="crop" />
+    <rendition name="onethird" width="290" height="190" specs="crop" />
+    <rendition name="onehalf" width="450" height="295" specs="crop" />
+    <rendition name="square" width="130" height="130" specs="crop" />
     <rendition name="square large" width="290" height="290" specs="crop" />
-    <rendition name="square album" width="320" height="320" specs="crop" />
     <rendition name="show" width="930" height="260" specs="crop" />
   </renditions> 
 </theme>

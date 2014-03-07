@@ -9,12 +9,12 @@
     <ttl>60</ttl>
     <generator>Newscoop</generator>
     <image>
-      <url>{{ url static_file="_img/logo.png" }}</url>
+      <url>{{ url static_file="assets/img/logo.png" }}</url>
       <title>{{$gimme->publication->name}}</title>
       <link>http://{{$gimme->publication->site}}</link>
     </image>
     <atom:link href="http://{{ $gimme->publication->site }}/en/static/rss" rel="self" type="application/rss+xml" />
-    {{list_articles length="20" ignore_issue="true" ignore_section="true" constraints="type is news" order="bypublishdate desc"}}
+    {{list_articles length="20" ignore_issue="true" ignore_section="true" constraints="type is news type is show" order="bypublishdate desc"}}
     <item>
       <title>{{$gimme->article->name|html_entity_decode|regex_replace:'/&(.*?)quo;/':'&quot;'}}</title>
       <link>http://{{$gimme->publication->site}}/{{ $gimme->language->code }}/{{$gimme->issue->url_name}}/{{$gimme->section->url_name}}/{{$gimme->article->number}}</link>
